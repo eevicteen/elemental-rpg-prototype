@@ -1,0 +1,86 @@
+[gd_scene load_steps=12 format=3 uid="uid://br2lmvbcnk0aw"]
+
+[ext_resource type="Script" uid="uid://c3r8buecyf5lh" path="res://characters/aria.gd" id="1_lndsx"]
+[ext_resource type="Script" uid="uid://0lch38krxdpp" path="res://characters/hp_bar.gd" id="2_lndsx"]
+[ext_resource type="FontFile" uid="uid://cwy0807mf3rd8" path="res://assets/font/pokemon_pixel_font.ttf" id="3_ur20g"]
+[ext_resource type="Texture2D" uid="uid://cuvocmya354i5" path="res://assets/player/aria/aria_animation_new.png" id="4_ur20g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63dh5"]
+atlas = ExtResource("4_ur20g")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_65nnj"]
+atlas = ExtResource("4_ur20g")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l57h7"]
+atlas = ExtResource("4_ur20g")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_um0fl"]
+atlas = ExtResource("4_ur20g")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur20g"]
+atlas = ExtResource("4_ur20g")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssidb"]
+atlas = ExtResource("4_ur20g")
+region = Rect2(128, 256, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ur20g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63dh5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_65nnj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_l57h7")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_um0fl")
+}],
+"loop": false,
+"name": &"harmonic_wave",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_ur20g")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_ssidb")
+}],
+"loop": false,
+"name": &"roaring_melody",
+"speed": 3.0
+}]
+
+[node name="Aria" type="CharacterBody2D"]
+script = ExtResource("1_lndsx")
+
+[node name="HP Bar" type="ProgressBar" parent="."]
+offset_left = -25.0
+offset_top = 96.0
+offset_right = 30.0
+offset_bottom = 127.0
+theme_override_fonts/font = ExtResource("3_ur20g")
+theme_override_font_sizes/font_size = 30
+step = 1.0
+script = ExtResource("2_lndsx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(6.00002, 11)
+scale = Vector2(1.03906, 1.15625)
+sprite_frames = SubResource("SpriteFrames_ur20g")
+animation = &"roaring_melody"
+autoplay = "default"

@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cvb3ffkaw6g3x"]
+
+[ext_resource type="FontFile" uid="uid://cwy0807mf3rd8" path="res://assets/font/pokemon_pixel_font.ttf" id="1_t33p5"]
+
+[resource]
+default_font = ExtResource("1_t33p5")
+default_font_size = 30

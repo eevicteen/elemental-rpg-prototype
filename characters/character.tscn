@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkcootcy24dop"]
+
+[ext_resource type="Script" uid="uid://bijubpyjf0y28" path="res://characters/character.gd" id="1_glpr6"]
+[ext_resource type="Script" uid="uid://0lch38krxdpp" path="res://characters/hp_bar.gd" id="2_qqr4u"]
+
+[node name="Character" type="CharacterBody2D"]
+script = ExtResource("1_glpr6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="HP Bar" type="ProgressBar" parent="."]
+offset_right = 4.0
+offset_bottom = 27.0
+script = ExtResource("2_qqr4u")
