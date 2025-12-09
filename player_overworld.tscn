@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfwtjtpol8ru1"]
+
+[ext_resource type="Script" uid="uid://dw2ymuwkkph6p" path="res://player_overworld.gd" id="1_ml20r"]
+[ext_resource type="Texture2D" uid="uid://cornpj1og0qo0" path="res://icon.svg" id="2_fjhjj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ml20r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_fjhjj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2n7qq"]
+size = Vector2(126, 125)
+
+[node name="PlayerOverworld" type="CharacterBody2D"]
+script = ExtResource("1_ml20r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ml20r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_2n7qq")

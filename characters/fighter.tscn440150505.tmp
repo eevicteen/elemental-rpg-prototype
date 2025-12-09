@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2xsv2ichj2v1"]
+
+[ext_resource type="Script" uid="uid://uld3c680fbar" path="res://characters/fighter.gd" id="1_f658i"]
+[ext_resource type="Texture2D" uid="uid://cornpj1og0qo0" path="res://icon.svg" id="2_ripr3"]
+[ext_resource type="Script" uid="uid://0lch38krxdpp" path="res://characters/hp_bar.gd" id="3_a5evf"]
+
+[node name="Fighter" type="CharacterBody2D"]
+script = ExtResource("1_f658i")
+char_name = "Fighter"
+max_hp = 30
+hp = 30
+strength = 10
+speed = 6
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ripr3")
+
+[node name="HP Bar" type="ProgressBar" parent="."]
+offset_right = 4.0
+offset_bottom = 27.0
+script = ExtResource("3_a5evf")

@@ -1,0 +1,88 @@
+[gd_scene load_steps=12 format=3 uid="uid://djw12g2j6iwfa"]
+
+[ext_resource type="Script" uid="uid://cbql1jrieaoti" path="res://characters/poppy.gd" id="1_c0q6a"]
+[ext_resource type="Texture2D" uid="uid://c8dnamvug121p" path="res://assets/enemy/poppy_animation.png" id="2_xhipl"]
+[ext_resource type="Script" uid="uid://0lch38krxdpp" path="res://characters/hp_bar.gd" id="3_2ship"]
+[ext_resource type="FontFile" uid="uid://cwy0807mf3rd8" path="res://assets/font/pokemon_pixel_font.ttf" id="3_xhipl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ship"]
+atlas = ExtResource("2_xhipl")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n38sk"]
+atlas = ExtResource("2_xhipl")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs41o"]
+atlas = ExtResource("2_xhipl")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klxpf"]
+atlas = ExtResource("2_xhipl")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nq0uj"]
+atlas = ExtResource("2_xhipl")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y06xw"]
+atlas = ExtResource("2_xhipl")
+region = Rect2(128, 256, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ng2gm"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_2ship")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_n38sk")
+}],
+"loop": false,
+"name": &"astral_voice",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_cs41o")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_klxpf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_nq0uj")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_y06xw")
+}],
+"loop": false,
+"name": &"rarara",
+"speed": 3.0
+}]
+
+[node name="Poppy" type="CharacterBody2D"]
+script = ExtResource("1_c0q6a")
+max_hp = 70
+hp = 70
+speed = 2
+
+[node name="HP Bar" type="ProgressBar" parent="."]
+offset_left = -23.0
+offset_top = -71.0
+offset_right = 19.0
+offset_bottom = -44.0
+theme_override_fonts/font = ExtResource("3_xhipl")
+theme_override_font_sizes/font_size = 30
+script = ExtResource("3_2ship")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2.84217e-14, 0)
+scale = Vector2(1.19687, 1.3)
+sprite_frames = SubResource("SpriteFrames_ng2gm")
+animation = &"rarara"
+autoplay = "default"
