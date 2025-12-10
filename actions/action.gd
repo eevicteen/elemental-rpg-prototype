@@ -4,6 +4,7 @@ class_name Action
 @export var description := 'Default Description'
 @export var is_heal := false
 @export var is_charge := false
+@export var is_item_action := false
 
 #will be overridden in the child action resources. performs the action.
 func execute(source, target):

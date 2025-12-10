@@ -63,8 +63,11 @@ func play_turn(target, action) -> void:
 			charged_target = null
 		await get_tree().create_timer(1.5).timeout
 		return
-
-	emit_signal("text_emitted", char_name + " is performing " + action.action_name)
+	
+	if action.is_item_action:
+		emit_signal("text_emitted", char_name + action.action_name)
+	else:
+		emit_signal("text_emitted", char_name + " is performing " + action.action_name)
 	await get_tree().create_timer(1).timeout
 	await action.execute(self, target)
 

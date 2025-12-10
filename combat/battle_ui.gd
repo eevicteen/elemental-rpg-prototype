@@ -65,8 +65,10 @@ func _on_item_pressed():
 func _on_item_selected(item):
 	print(item)
 	var item_new = GameState.inventory[item]["scene"].new()
+	
 	selected_action = item_new.use_action.new()
-	selected_action.action_name = "Use " + item_new.item_name
+	selected_action.is_item_action = true
+	selected_action.action_name = " is using a " + item_new.item_name +"."
 	print(selected_action.action_name)
 	if selected_action.is_heal:
 		selected_action.heal_amount = item_new.item_degree

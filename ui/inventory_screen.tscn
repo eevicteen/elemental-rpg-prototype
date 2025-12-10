@@ -42,7 +42,7 @@ theme_override_constants/separation = 49
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 50
-text = "Characters"
+text = "Inventory"
 
 [node name="InventorySet" type="HBoxContainer" parent="MarginContainer/MenuVBox"]
 layout_mode = 2
