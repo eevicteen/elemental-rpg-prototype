@@ -14,5 +14,4 @@ func _ready():
 	skills = [ preload("res://actions/vocal_strike.gd").new(),
 	preload("res://actions/high_note.gd").new(),
 	preload("res://actions/concerto.gd").new()]
-	print(char_name, " ready for battle!")
 	global_position = Vector2(196, 401)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dfwtjtpol8ru1"]
 
-[ext_resource type="Script" uid="uid://dw2ymuwkkph6p" path="res://player_overworld.gd" id="1_ml20r"]
+[ext_resource type="Script" uid="uid://dw2ymuwkkph6p" path="res://overworld/player_overworld.gd" id="1_ml20r"]
 [ext_resource type="Texture2D" uid="uid://cornpj1og0qo0" path="res://icon.svg" id="2_fjhjj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ml20r"]

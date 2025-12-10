@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://csts0mbb304jw"]
 
-[ext_resource type="PackedScene" uid="uid://dfwtjtpol8ru1" path="res://player_overworld.tscn" id="1_6jwp1"]
-[ext_resource type="Script" uid="uid://f6g0nrph730g" path="res://overworld.gd" id="1_nyb65"]
-[ext_resource type="PackedScene" uid="uid://duon6rjvcirxp" path="res://enemy.tscn" id="2_v726c"]
+[ext_resource type="PackedScene" uid="uid://dfwtjtpol8ru1" path="res://overworld/player_overworld.tscn" id="1_6jwp1"]
+[ext_resource type="Script" uid="uid://f6g0nrph730g" path="res://overworld/overworld.gd" id="1_nyb65"]
+[ext_resource type="PackedScene" uid="uid://duon6rjvcirxp" path="res://overworld/enemy.tscn" id="2_v726c"]
 
 [node name="Overworld" type="Node2D"]
 script = ExtResource("1_nyb65")

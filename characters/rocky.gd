@@ -10,4 +10,3 @@ func _ready() -> void:
 	skills=[preload("res://actions/power_chord.gd").new(),
 	preload("res://actions/encore.gd").new(),
 	preload("res://actions/defend.gd").new()]
-	print(char_name, " ready for battle!")

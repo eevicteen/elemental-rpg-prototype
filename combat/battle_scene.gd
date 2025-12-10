@@ -9,6 +9,7 @@ var alive_heroes = []
 var alive_enemies = []
 signal battle_finished
 
+
 func _ready() -> void:
 	print("Battle starting...")
 	turn_queue.initialize()
@@ -38,13 +39,13 @@ func _on_turn_finished():
 	else:
 		print("Continuing battle...")
 
+
 func is_battle_over() -> bool:
 	alive_heroes.clear()
 	alive_enemies.clear()
 	for char in turn_queue.character_list:
 		if !char.is_enemy:
 			GameState.hero_data[char.char_name]['hp'] = char.hp
-			print(char.hp)
 		if char.hp > 0 and char.is_enemy:
 			alive_enemies.append(char)
 		elif char.hp > 0 and !char.is_enemy:
@@ -52,15 +53,18 @@ func is_battle_over() -> bool:
 			
 	return alive_heroes.is_empty() or alive_enemies.is_empty()
 
+
 func show_results() -> void:
 	if alive_heroes.is_empty():
 		show_battle_text("The enemies won!")
 	else:
 		show_battle_text("The heroes won!")
+	
 		
 func show_battle_text(text: String):
 	battle_text_label.text = "▶  " + text + "\n"
 	await get_tree().create_timer(2.0).timeout
+	
 	
 func _return_to_overworld():
 	emit_signal("battle_finished")

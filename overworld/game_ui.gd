@@ -1,26 +1,31 @@
 extends CanvasLayer
 
 @onready var mainmenu_path = "res://ui/overworld_menu.tscn"
+@onready var player = $"../Overworld/PlayerOverworld"
 var current_menu: Control
 var char_menu = "res://ui/character_screen.tscn"
-var char_button
+
 
 func _ready() -> void:
 	pass
 
+
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("menu_open"):
 		_open_menu(mainmenu_path)
+		player.can_move = false
 		
 	if Input.is_action_just_pressed("menu_close"):	
 		_close_current_menu()
+		player.can_move = true
+
 	
 func _on_character_select():
 	_open_menu(char_menu)
 
+
 func _close_current_menu():
 	if current_menu:
-		print(current_menu)
 		current_menu.queue_free()
 
 
