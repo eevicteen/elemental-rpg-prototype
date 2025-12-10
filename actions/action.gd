@@ -1,5 +1,5 @@
 extends Resource
-
+class_name Action
 @export var action_name := 'Default Action'
 @export var description := 'Default Description'
 @export var is_heal := false

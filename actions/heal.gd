@@ -6,6 +6,7 @@ class_name HealAction
 func _init():
 	action_name = "Heal"
 	description = "Restore some HP"
+	is_heal = true
 	
 func execute(source, target):
 	await source.heal(heal_amount)

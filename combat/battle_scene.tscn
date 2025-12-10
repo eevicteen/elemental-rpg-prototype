@@ -825,6 +825,12 @@ theme_override_fonts/font = ExtResource("13_rx3wi")
 theme_override_font_sizes/font_size = 30
 text = "Heal"
 
+[node name="Items" type="Button" parent="BattleUI/MainPanel"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_rx3wi")
+theme_override_font_sizes/font_size = 30
+text = "Items"
+
 [node name="Defend" type="Button" parent="BattleUI/MainPanel"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("13_rx3wi")
@@ -838,12 +844,28 @@ offset_right = 149.0
 offset_bottom = 506.0
 theme = ExtResource("15_wy2mt")
 
+[node name="ItemPanel" type="VBoxContainer" parent="BattleUI"]
+anchors_preset = -1
+anchor_right = 0.035
+anchor_bottom = 0.062
+offset_left = 21.0
+offset_top = 94.0
+offset_right = 20.68
+offset_bottom = 93.824
+metadata/_edit_use_anchors_ = true
+
 [node name="TargetPanel" type="Control" parent="BattleUI"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchor_left = 0.016
+anchor_top = 0.144
+anchor_right = 0.05
+anchor_bottom = 0.205
+offset_left = -0.432001
+offset_top = -0.312004
+offset_right = 0.399998
+offset_bottom = 0.159988
 theme = ExtResource("15_wy2mt")
+metadata/_edit_use_anchors_ = true
 
 [node name="TurnLabel" type="RichTextLabel" parent="BattleUI"]
 offset_left = 331.0

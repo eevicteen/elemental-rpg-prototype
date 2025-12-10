@@ -19,5 +19,20 @@ var hero_data = {
 	}
 }
 
+var inventory = {
+	"Potion": {
+		"scene": preload("res://items/potion.gd"),
+		"stack": 99
+	},
+	"Shuriken": {
+		"scene": preload("res://items/shuriken.gd"),
+		"stack": 1
+	}
+}
 
 var last_player_position
+
+func update_inventory():
+	for item in inventory:
+		if inventory[item]["stack"] <= 0:
+			inventory.erase(item)

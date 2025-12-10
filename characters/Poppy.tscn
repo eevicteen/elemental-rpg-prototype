@@ -86,3 +86,6 @@ scale = Vector2(1.19687, 1.3)
 sprite_frames = SubResource("SpriteFrames_ng2gm")
 animation = &"rarara"
 autoplay = "default"
+
+[node name="TargetMarker" type="Marker2D" parent="."]
+position = Vector2(0, -99)

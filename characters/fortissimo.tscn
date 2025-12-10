@@ -102,3 +102,6 @@ scale = Vector2(1.28906, 1.57812)
 sprite_frames = SubResource("SpriteFrames_st3ld")
 animation = &"vocal_strike"
 autoplay = "default"
+
+[node name="TargetMarker" type="Marker2D" parent="."]
+position = Vector2(0, -128)

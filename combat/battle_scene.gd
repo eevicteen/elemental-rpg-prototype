@@ -32,7 +32,7 @@ func _on_turn_finished():
 		battle_active = false
 		print("Battle ended!")
 		turn_queue.battle_active = false
-		show_results()
+		await show_results()
 		
 		call_deferred("_return_to_overworld")
 
@@ -59,8 +59,9 @@ func show_results() -> void:
 		show_battle_text("The enemies won!")
 	else:
 		show_battle_text("The heroes won!")
+	await get_tree().create_timer(2.0).timeout
 	
-		
+
 func show_battle_text(text: String):
 	battle_text_label.text = "▶  " + text + "\n"
 	await get_tree().create_timer(2.0).timeout

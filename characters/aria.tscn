@@ -84,3 +84,6 @@ scale = Vector2(1.03906, 1.15625)
 sprite_frames = SubResource("SpriteFrames_ur20g")
 animation = &"roaring_melody"
 autoplay = "default"
+
+[node name="TargetMarker" type="Marker2D" parent="."]
+position = Vector2(0, -75)

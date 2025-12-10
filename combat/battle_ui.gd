@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var main_panel: Control = $MainPanel
 @onready var skill_panel: Control = $SkillPanel
 @onready var target_panel: Control = $TargetPanel
+@onready var item_panel: Control = $ItemPanel
 @onready var turn_queue: Node = $"../TurnQueue"
 
 # Main action buttons
@@ -10,10 +11,12 @@ extends CanvasLayer
 @onready var skill_button: Button = $MainPanel/Skill
 @onready var heal_button: Button = $MainPanel/Heal
 @onready var defend_button: Button = $MainPanel/Defend
+@onready var item_button = $MainPanel/Items
 
 @onready var defend_action = preload("res://actions/defend.gd").new()
 @onready var heal_action = preload("res://actions/heal.gd").new()
 @onready var attack_action = preload("res://actions/attack.gd").new()
+
 
 var selected_action = null
 var selected_target = null
@@ -33,6 +36,7 @@ func _ready():
 	skill_button.pressed.connect(_on_skill_pressed)
 	heal_button.pressed.connect(_on_heal_pressed)
 	defend_button.pressed.connect(_on_defend_pressed)
+	item_button.pressed.connect(_on_item_pressed)
 
 	turn_queue.connect("player_turn_started", Callable(self, "_on_player_turn"))
 
@@ -46,6 +50,33 @@ func _on_player_turn(player):
 	attack_button.visible = true
 	heal_button.visible = true  
 
+func _on_item_pressed():
+	main_panel.visible=false
+	item_panel.visible = true
+	for child in item_panel.get_children():
+		child.queue_free()
+	
+	for item in GameState.inventory:
+		var btn = Button.new()
+		btn.text = item + ": " + str(GameState.inventory[item]["stack"])
+		btn.pressed.connect(func():_on_item_selected(item))
+		item_panel.add_child(btn)
+		
+func _on_item_selected(item):
+	print(item)
+	var item_new = GameState.inventory[item]["scene"].new()
+	selected_action = item_new.use_action.new()
+	selected_action.action_name = "Use " + item_new.item_name
+	print(selected_action.action_name)
+	if selected_action.is_heal:
+		selected_action.heal_amount = item_new.item_degree
+	else:
+		selected_action.base_damage = item_new.item_degree
+	GameState.inventory[item]["stack"] -= 1
+	GameState.update_inventory()
+	item_panel.visible = false
+	_show_target_panel()
+	
 func _on_skill_pressed():
 	main_panel.visible = false
 	skill_panel.visible = true
@@ -138,9 +169,13 @@ func _add_target_button(char):
 			push_warning("AnimatedSprite2D for %s has no valid animation!" % char.name)
 
 	# Compute button position
-	var btn_length = btn.text.length() * 10
-	var char_pos = char.global_position
-	btn.position = char_pos - Vector2(btn_length / 2, sprite_height / 2 + 20)
+
+	var target_marker = char.get_node_or_null("TargetMarker")
+	
+	btn.position = target_marker.global_position
+	print(target_marker.global_position)
+	
+	
 	
 	target_panel.add_child(btn)
 	
