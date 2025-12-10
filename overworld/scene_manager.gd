@@ -7,7 +7,6 @@ const BATTLE_PATH = "res://combat/battle_scene.tscn"
 
 
 func _ready() -> void:
-	print(player_node)
 	player_node.connect("new_battle", Callable(self,"_on_player_overworld_new_battle"))
 	
 	
