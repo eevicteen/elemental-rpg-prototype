@@ -17,12 +17,11 @@ var speed_buffs:= 0
 @export var is_enemy: bool = false
 @export var is_defending: bool = false
 
-# Optional nodes
 @onready var animator: AnimationPlayer = null
 @onready var healthbar: ProgressBar = null
 @onready var skills
 @onready var sprite: AnimatedSprite2D = null
-
+@onready var turn_queue = get_parent()
 var charge_countdown = 0
 var charged_action = null
 var charged_target = null
@@ -66,13 +65,12 @@ func play_turn(target, action) -> void:
 		await get_tree().create_timer(1.5).timeout
 		return
 	
-	if action.is_item_action:
-		emit_signal("text_emitted", char_name + action.action_name)
+	if action.is_teamwide:
+		for char in turn_queue.hero_list:
+			await _perform_action(action, char)
 	else:
-		emit_signal("text_emitted", char_name + " is performing " + action.action_name)
-	await get_tree().create_timer(1).timeout
-	await action.execute(self, target)
-
+		await _perform_action(action,target)
+	
 	emit_signal("text_emitted", char_name + " finished turn.")
 	await get_tree().create_timer(1).timeout
 	emit_signal("turn_finished")
@@ -94,6 +92,16 @@ func take_damage(amount: int) -> void:
 		die()
 
 
+func _perform_action(action,target):
+	if action.is_item_action:
+		emit_signal("text_emitted", char_name + action.action_name)
+	else:
+		emit_signal("text_emitted", char_name + " is performing " + action.action_name)
+	
+	await get_tree().create_timer(1).timeout
+	await action.execute(self, target)
+
+
 func defend():
 	is_defending = true
 	$AnimatedSprite2D.modulate = Color.SKY_BLUE
@@ -103,6 +111,7 @@ func die() -> void:
 	emit_signal("text_emitted", char_name + " has fallen!")
 	await get_tree().create_timer(3.0).timeout
 	
+	
 func heal(heal_amount):
 	var new_hp = min(hp + heal_amount, max_hp)
 	var diff = new_hp - hp
@@ -110,29 +119,44 @@ func heal(heal_amount):
 	emit_signal("text_emitted", 'Healed for ' + str(diff))
 	await get_tree().create_timer(1.0).timeout
 
+
 func buff(type,amount,duration):
 	buff_list.append([type,amount,duration])
 	emit_signal("text_emitted", char_name + "'s " + type + " has been buffed by " + str(amount) + " for " + str(duration) + " turns." )
 	await get_tree().create_timer(1.0).timeout
 	
+	
 func handle_damage_buffs():
 	strength_buffs = 0
+	magic_buffs = 0
+	var buffs_to_remove = [] 
+	
 	for buff in buff_list:
-		if buff[2] <= 0:
-			buff_list.erase(buff)
-			continue
+		buff[2] -= 1
+		if buff[2] < 0:
+			buffs_to_remove.append(buff)
+			continue 
 		if buff[0] == 'strength':
 			strength_buffs += buff[1]
 		elif buff[0] == 'magic':
 			magic_buffs += buff[1]
-		buff[2] -= 1
+		else:
+			continue
+		
+		
+	for expired_buff in buffs_to_remove:
+		buff_list.erase(expired_buff)
+	
+	
 	
 func handle_speed_buffs():
 	speed_buffs = 0
 	for buff in buff_list:
+		if buff[0] == 'speed':
+			speed_buffs += buff[1]
+		else:
+			continue
 		if buff[2] <= 0:
 			buff_list.erase(buff)
-			continue
-		elif buff[0] == 'speed':
-			speed_buffs += buff[1]
+			continue	
 		buff[2] -= 1

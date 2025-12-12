@@ -63,15 +63,15 @@ func _on_item_pressed():
 		item_panel.add_child(btn)
 		
 func _on_item_selected(item):
-	print(item)
 	var item_new = GameState.inventory[item]["scene"].new()
 	
 	selected_action = item_new.use_action.new()
 	selected_action.is_item_action = true
-	selected_action.action_name = " is using a " + item_new.item_name +"."
-	print(selected_action.action_name)
+	selected_action.action_name = " is using a " + item_new.item_name + "."
 	if selected_action.is_heal:
 		selected_action.heal_amount = item_new.item_degree
+	elif selected_action.buff_action != null:
+		selected_action.buff_amount = item_new.item_degree
 	else:
 		selected_action.base_damage = item_new.item_degree
 	GameState.inventory[item]["stack"] -= 1
@@ -89,7 +89,6 @@ func _on_skill_pressed():
 		
 	#Construct skill buttons dynamically
 	for skill in current_player.skills:
-		print(skill.action_name)
 		var btn = Button.new()
 		btn.text = skill.action_name
 		btn.pressed.connect(
@@ -180,14 +179,11 @@ func _add_target_button(char):
 			push_warning("AnimatedSprite2D for %s has no valid animation!" % char.name)
 
 	# Compute button position
-
 	var target_marker = char.get_node_or_null("TargetMarker")
 	
 	btn.position = target_marker.global_position
 	print(target_marker.global_position)
-	
-	
-	
+		
 	target_panel.add_child(btn)
 	
 

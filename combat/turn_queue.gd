@@ -6,6 +6,7 @@ signal player_turn_started(active_player)
 signal turn_finished
 signal text_emitted(text:String)
 
+var hero_list = []
 var active_character
 var character_list = []
 var char_index = 0
@@ -26,6 +27,7 @@ func initialize():
 		hero.speed = hero_data["speed"]
 		add_child(hero)
 		character_list.append(hero)
+		hero_list.append(hero)
 		
 	character_list.sort_custom(sort_descending)
 	battle_active = true
@@ -60,14 +62,19 @@ func sort_descending(a, b):
 func play_turn() -> void:
 	log_message("")
 	for act in planned_actions:
+		
 		var source = act[0]
 		var action = act[1]
 		var target = act[2]
-		
+		print(action.action_name)
 		if source.hp <= 0:
 			continue
-			
-		if (target.hp <= 0 or target == null) and action.action_name not in ['Defend','Heal']:
+		
+		if action.is_teamwide:
+			await source.play_turn(target,action)
+			continue 
+				
+		if (target == null or  target.hp <= 0) and action.action_name not in ['Defend','Heal']:
 			var message = "%s tried to perform %s on %s! But it failed.." % [source.char_name, action.action_name, target.char_name]
 			emit_signal("text_emitted", message)
 			await get_tree().create_timer(1).timeout
@@ -99,8 +106,8 @@ func _enemy_turn() -> void:
 	var weakest_player: Node = null
 	var lowest_hp = INF
 
-	for char in character_list:
-		if char.char_name in ["Fortissimo", "Aria"] and char.hp > 0:
+	for char in hero_list:
+		if char.hp > 0:
 			if char.hp < lowest_hp:
 				lowest_hp = char.hp
 				weakest_player = char
@@ -110,12 +117,9 @@ func _enemy_turn() -> void:
 
 		
 func player_turn(action,target):
-	if action.is_teamwide:
-		for char in character_list:
-			if char.char_name in ["Fortissimo", "Aria"]:
-				planned_actions.append([active_character,action,char])
-	else:
-		planned_actions.append([active_character, action, target])
+	print(action)
+	print(target)
+	planned_actions.append([active_character, action, target])
 	
 	_next_turn()
 
@@ -126,9 +130,10 @@ func _choose_next_turn():
 		_next_turn()
 		return
 
-	if active_character.char_name in ["Fortissimo", "Aria"]:
+	if active_character in hero_list:
 		log_message("Choosing action for: " + active_character.char_name)
 		emit_signal("player_turn_started", active_character)
+		
 	else:
 		_enemy_turn()
 
