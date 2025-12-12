@@ -1,19 +1,20 @@
 extends Resource
 class_name Action
 
-@export var action_name := 'Default Action'
-@export var description := 'Default Description'
+var action_name := 'Default Action'
+var description := 'Default Description'
 
-@export var is_charge := false
-var charge_time 
+var is_charge := false
+var charge_time: int
 
-@export var is_item_action := false
+var is_item_action := false
 
-@export var is_heal := false
-var heal_amount
-
-@export var buff_action = null
-var buff_amount
+var is_heal := false
+var heal_amount:int
+var buff_action = null
+var buff_amount: int
+var is_teamwide = false
+var buff_duration: int
 
 var is_magic := false
 var base_damage
@@ -34,9 +35,9 @@ func execute(source, target):
 	if is_heal:
 		await target.heal(heal_amount)
 	elif buff_action != null:
-		pass #create buff function
+		await target.buff(buff_action,buff_amount,buff_duration)
 	else:
 		if is_magic:
-			await target.take_damage(source.magic + base_damage)
+			await target.take_damage(source.magic + base_damage + source.magic_buffs)
 		else:
-			await target.take_damage(source.strength + base_damage)
+			await target.take_damage(source.strength + base_damage + source.strength_buffs)

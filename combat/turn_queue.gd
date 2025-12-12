@@ -37,6 +37,7 @@ func _new_turn():
 	for char in character_list:
 		if char.hp <= 0:
 			to_remove.append(char)
+		char.handle_speed_buffs()
 
 	for dead_char in to_remove:
 		character_list.erase(dead_char)
@@ -53,7 +54,7 @@ func _new_turn():
 	
 #Sorting by speed (higher first)
 func sort_descending(a, b):
-	return a.speed > b.speed
+	return a.speed + a.speed_buffs > b.speed + b.speed_buffs
 
 
 func play_turn() -> void:
@@ -109,7 +110,13 @@ func _enemy_turn() -> void:
 
 		
 func player_turn(action,target):
-	planned_actions.append([active_character, action, target])
+	if action.is_teamwide:
+		for char in character_list:
+			if char.char_name in ["Fortissimo", "Aria"]:
+				planned_actions.append([active_character,action,char])
+	else:
+		planned_actions.append([active_character, action, target])
+	
 	_next_turn()
 
 

@@ -9,6 +9,9 @@ signal text_emitted(text: String)
 @export var max_hp: int = 100
 @export var hp: int = 100
 @export var strength: int = 5
+var strength_buffs:= 0
+var magic_buffs:=0
+var speed_buffs:= 0
 @export var magic: int = 5
 @export var speed: int = 10
 @export var is_enemy: bool = false
@@ -24,7 +27,7 @@ var charge_countdown = 0
 var charged_action = null
 var charged_target = null
 
-
+var buff_list = []
 func _ready() -> void:
 	if has_node("AnimatedSprite2D"):
 		sprite = $AnimatedSprite2D
@@ -36,12 +39,11 @@ func _ready() -> void:
 		healthbar.value = hp
 	add_to_group("characters")
 
-
 # Turn execution
 func play_turn(target, action) -> void:
 	$AnimatedSprite2D.modulate = Color.WHITE
 	is_defending = false
-
+	handle_damage_buffs()
 	emit_signal("text_emitted", char_name + " is taking a turn...")
 	await get_tree().create_timer(1).timeout
 	if sprite:
@@ -107,3 +109,30 @@ func heal(heal_amount):
 	hp = new_hp
 	emit_signal("text_emitted", 'Healed for ' + str(diff))
 	await get_tree().create_timer(1.0).timeout
+
+func buff(type,amount,duration):
+	buff_list.append([type,amount,duration])
+	emit_signal("text_emitted", char_name + "'s " + type + " has been buffed by " + str(amount) + " for " + str(duration) + " turns." )
+	await get_tree().create_timer(1.0).timeout
+	
+func handle_damage_buffs():
+	strength_buffs = 0
+	for buff in buff_list:
+		if buff[2] <= 0:
+			buff_list.erase(buff)
+			continue
+		if buff[0] == 'strength':
+			strength_buffs += buff[1]
+		elif buff[0] == 'magic':
+			magic_buffs += buff[1]
+		buff[2] -= 1
+	
+func handle_speed_buffs():
+	speed_buffs = 0
+	for buff in buff_list:
+		if buff[2] <= 0:
+			buff_list.erase(buff)
+			continue
+		elif buff[0] == 'speed':
+			speed_buffs += buff[1]
+		buff[2] -= 1

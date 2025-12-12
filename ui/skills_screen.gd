@@ -38,7 +38,7 @@ func _ready() -> void:
 		if skill.is_heal:
 			skill_value_label.text = "Heal Amount: " + str(skill.heal_amount)
 		elif skill.buff_action != null:
-			skill_value_label.text = skill.buff_action + " Buff Amount: " + skill.buff_amount
+			skill_value_label.text = skill.buff_action + " Buff Amount: " + str(skill.buff_amount)
 		else:
 			var add_on : String
 			if skill.is_magic: add_on = " + MAG"

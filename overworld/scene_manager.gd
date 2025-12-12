@@ -15,6 +15,7 @@ func _on_player_overworld_new_battle() -> void:
 	var new_battle = battle_scene.instantiate()
 	new_battle.connect("battle_finished", Callable(self, "_on_battle_finished"))
 	overworld_node.hide()
+	gameui.hide()
 	GameState.last_player_position = player_node.global_position
 	add_child(new_battle)
 	
@@ -22,3 +23,4 @@ func _on_player_overworld_new_battle() -> void:
 func _on_battle_finished():
 	player_node.global_position = GameState.last_player_position
 	overworld_node.show()
+	gameui.show()

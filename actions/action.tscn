@@ -4,5 +4,3 @@
 
 [node name="Action" type="Node2D"]
 script = ExtResource("1_b1f2m")
-action_name = "Concerto"
-description = "Charge a powerful attack for two turns before using it."

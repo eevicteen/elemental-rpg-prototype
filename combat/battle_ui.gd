@@ -89,6 +89,7 @@ func _on_skill_pressed():
 		
 	#Construct skill buttons dynamically
 	for skill in current_player.skills:
+		print(skill.action_name)
 		var btn = Button.new()
 		btn.text = skill.action_name
 		btn.pressed.connect(
@@ -132,11 +133,19 @@ func _show_target_panel():
 		
 	for char in turn_queue.character_list:
 		if char.hp > 0:
+			if selected_action.is_teamwide:
+				turn_queue.player_turn(selected_action,null)
+				selected_action = null
+				selected_target = null
+				return
 			# Healing = target allies; Attacking = target enemies
-			if selected_action.is_heal and char.char_name in ["Fortissimo", "Aria"]:
+			elif selected_action.is_heal and char.char_name in ["Fortissimo", "Aria"]:
 				_add_target_button(char)
-			elif not selected_action.is_heal and char.char_name not in ["Fortissimo", "Aria"]:
+			elif selected_action.buff_action != null and char.char_name in ["Fortissimo", "Aria"]:
 				_add_target_button(char)
+			elif not selected_action.is_heal and selected_action.buff_action == null and char.char_name not in ["Fortissimo", "Aria"]:
+				_add_target_button(char)
+			
 
 func _add_target_button(char):
 	var btn = Button.new()
