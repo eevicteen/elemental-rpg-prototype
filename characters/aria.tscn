@@ -5,14 +5,6 @@
 [ext_resource type="FontFile" uid="uid://cwy0807mf3rd8" path="res://assets/font/pokemon_pixel_font.ttf" id="3_ur20g"]
 [ext_resource type="Texture2D" uid="uid://cuvocmya354i5" path="res://assets/player/aria/aria_animation_new.png" id="4_ur20g"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_63dh5"]
-atlas = ExtResource("4_ur20g")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_65nnj"]
-atlas = ExtResource("4_ur20g")
-region = Rect2(128, 0, 128, 128)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_l57h7"]
 atlas = ExtResource("4_ur20g")
 region = Rect2(0, 128, 128, 128)
@@ -29,19 +21,16 @@ region = Rect2(0, 256, 128, 128)
 atlas = ExtResource("4_ur20g")
 region = Rect2(128, 256, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_63dh5"]
+atlas = ExtResource("4_ur20g")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_65nnj"]
+atlas = ExtResource("4_ur20g")
+region = Rect2(128, 0, 128, 128)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ur20g"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_63dh5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_65nnj")
-}],
-"loop": true,
-"name": &"default",
-"speed": 2.0
-}, {
 "frames": [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_l57h7")
@@ -50,7 +39,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_um0fl")
 }],
 "loop": false,
-"name": &"harmonic_wave",
+"name": &"Harmonic Wave",
 "speed": 3.0
 }, {
 "frames": [{
@@ -61,8 +50,19 @@ animations = [{
 "texture": SubResource("AtlasTexture_ssidb")
 }],
 "loop": false,
-"name": &"roaring_melody",
+"name": &"Roaring Melody",
 "speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63dh5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_65nnj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
 }]
 
 [node name="Aria" type="CharacterBody2D"]
@@ -82,7 +82,7 @@ script = ExtResource("2_lndsx")
 position = Vector2(6.00002, 11)
 scale = Vector2(1.03906, 1.15625)
 sprite_frames = SubResource("SpriteFrames_ur20g")
-animation = &"roaring_melody"
+animation = &"Roaring Melody"
 autoplay = "default"
 
 [node name="TargetMarker" type="Marker2D" parent="."]

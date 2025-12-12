@@ -13,14 +13,6 @@ region = Rect2(0, 256, 128, 128)
 atlas = ExtResource("4_a5kpm")
 region = Rect2(128, 256, 128, 128)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ag4ph"]
-atlas = ExtResource("4_a5kpm")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oc5ep"]
-atlas = ExtResource("4_a5kpm")
-region = Rect2(128, 0, 128, 128)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_fkrnv"]
 atlas = ExtResource("4_a5kpm")
 region = Rect2(128, 128, 128, 128)
@@ -37,6 +29,14 @@ region = Rect2(256, 0, 128, 128)
 atlas = ExtResource("4_a5kpm")
 region = Rect2(0, 128, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ag4ph"]
+atlas = ExtResource("4_a5kpm")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oc5ep"]
+atlas = ExtResource("4_a5kpm")
+region = Rect2(128, 0, 128, 128)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_st3ld"]
 animations = [{
 "frames": [{
@@ -47,7 +47,29 @@ animations = [{
 "texture": SubResource("AtlasTexture_hddd6")
 }],
 "loop": false,
-"name": &"concerto",
+"name": &"Concerto",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_fkrnv")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_b5l04")
+}],
+"loop": false,
+"name": &"High Note",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_a5kpm")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_3gfv0")
+}],
+"loop": false,
+"name": &"Vocal Strike",
 "speed": 3.0
 }, {
 "frames": [{
@@ -60,28 +82,6 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 2.0
-}, {
-"frames": [{
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_fkrnv")
-}, {
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_b5l04")
-}],
-"loop": false,
-"name": &"high_note",
-"speed": 3.0
-}, {
-"frames": [{
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_a5kpm")
-}, {
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_3gfv0")
-}],
-"loop": false,
-"name": &"vocal_strike",
-"speed": 3.0
 }]
 
 [node name="Fortissimo" type="CharacterBody2D"]
@@ -100,7 +100,7 @@ script = ExtResource("3_a5evf")
 position = Vector2(-2, -16)
 scale = Vector2(1.28906, 1.57812)
 sprite_frames = SubResource("SpriteFrames_st3ld")
-animation = &"vocal_strike"
+animation = &"Vocal Strike"
 autoplay = "default"
 
 [node name="TargetMarker" type="Marker2D" parent="."]

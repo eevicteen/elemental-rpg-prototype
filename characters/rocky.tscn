@@ -5,14 +5,6 @@
 [ext_resource type="FontFile" uid="uid://cwy0807mf3rd8" path="res://assets/font/pokemon_pixel_font.ttf" id="3_txr1g"]
 [ext_resource type="Texture2D" uid="uid://ddnk13ykv0yqb" path="res://assets/enemy/rocky_animation.png" id="4_txr1g"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ttusp"]
-atlas = ExtResource("4_txr1g")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t26g5"]
-atlas = ExtResource("4_txr1g")
-region = Rect2(128, 0, 128, 128)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_tj2sy"]
 atlas = ExtResource("4_txr1g")
 region = Rect2(0, 256, 128, 128)
@@ -29,19 +21,16 @@ region = Rect2(0, 128, 128, 128)
 atlas = ExtResource("4_txr1g")
 region = Rect2(128, 128, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ttusp"]
+atlas = ExtResource("4_txr1g")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t26g5"]
+atlas = ExtResource("4_txr1g")
+region = Rect2(128, 0, 128, 128)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_usjw6"]
 animations = [{
-"frames": [{
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_ttusp")
-}, {
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_t26g5")
-}],
-"loop": true,
-"name": &"default",
-"speed": 6.0
-}, {
 "frames": [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_tj2sy")
@@ -50,7 +39,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_sub1q")
 }],
 "loop": false,
-"name": &"encore",
+"name": &"Encore",
 "speed": 3.0
 }, {
 "frames": [{
@@ -61,8 +50,19 @@ animations = [{
 "texture": SubResource("AtlasTexture_ieudm")
 }],
 "loop": false,
-"name": &"power_chord",
+"name": &"Power Chord",
 "speed": 3.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_ttusp")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_t26g5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
 }]
 
 [node name="Rocky" type="CharacterBody2D"]
@@ -80,7 +80,7 @@ script = ExtResource("3_8vdtn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_usjw6")
-animation = &"power_chord"
+animation = &"Power Chord"
 autoplay = "default"
 
 [node name="TargetMarker" type="Marker2D" parent="."]
