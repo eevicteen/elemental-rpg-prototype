@@ -13,7 +13,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("menu_open"):
-		_open_menu(mainmenu_path)
+		open_menu(mainmenu_path)
 		player.can_move = false
 		
 	if Input.is_action_just_pressed("menu_close"):	
@@ -22,10 +22,10 @@ func _process(delta: float) -> void:
 
 	
 func _on_character_select():
-	_open_menu(char_menu)
+	open_menu(char_menu)
 	
 func _on_inventory_select():
-	_open_menu(inv_menu)
+	open_menu(inv_menu)
 
 
 func _close_current_menu():
@@ -33,10 +33,14 @@ func _close_current_menu():
 		current_menu.queue_free()
 
 
-func _open_menu(menu_path):
+func open_menu(menu_path, char=null):
 	_close_current_menu()
 	current_menu = load(menu_path).instantiate()
+	if char != null:
+		current_menu.char = char
+	
 	add_child(current_menu)
+	
 	if menu_path == mainmenu_path:
 		var char_button_path = "MarginContainer/MenuVBox/Buttons/CharButton" 
 		var char_button = current_menu.get_node(char_button_path)

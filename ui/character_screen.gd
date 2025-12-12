@@ -1,6 +1,8 @@
 extends PanelContainer
 
 @onready var char_set = $MarginContainer/MenuVBox/CharacterSet
+var skill_menu_path = "res://ui/skills_screen.tscn"
+signal skill_select(char)
 
 func _ready() -> void:
 	var card_stylebox = StyleBoxFlat.new()
@@ -43,6 +45,8 @@ func _ready() -> void:
 			stat_value_label.set_horizontal_alignment(HORIZONTAL_ALIGNMENT_RIGHT)
 			stat_line.add_child(stat_value_label)
 			
+			
+			
 			var margin_card = MarginContainer.new()
 			margin_card.add_theme_constant_override("margin_left", 8)
 			margin_card.add_theme_constant_override("margin_bottom", 5)
@@ -50,8 +54,27 @@ func _ready() -> void:
 			
 			margin_card.add_child(stat_line)
 			character_card.add_child(margin_card)
+			
+		var skills_button = Button.new()
+		var char_instance = hero_data["scene"].instantiate()
+		char_instance.init_character()  
+		skills_button.pressed.connect(
+			Callable(self, "_on_skills_select").bind(char_instance)
+		)
+		skills_button.text = "Skills"
+		skills_button.add_theme_font_size_override("font_size",18)
+		skills_button.add_theme_color_override("font_color", Color(0.9, 0.9, 0.9))
+		var transparent_style = StyleBoxEmpty.new()
+		skills_button.add_theme_stylebox_override("normal", transparent_style)
+		skills_button.add_theme_stylebox_override("hover", transparent_style)
+		skills_button.add_theme_stylebox_override("pressed", transparent_style)
+		character_card.add_child(skills_button)
 		char_set.add_child(character_card_panel)
 	
 
 func _process(delta: float) -> void:
 	pass
+	
+
+func _on_skills_select(char):
+	get_parent().open_menu(skill_menu_path,char)
