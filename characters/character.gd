@@ -21,37 +21,28 @@ var speed_buffs:= 0
 @onready var healthbar: ProgressBar = null
 @onready var skills
 @onready var sprite: AnimatedSprite2D = null
-@onready var aura_sprite = $AuraSprite
-@onready var aura_gauge_display = $AuraGaugeDisplay
+# Assuming these are direct children of Character (Node2D)
+@onready var aura_sprite: AnimatedSprite2D = $AuraSprite
+@onready var aura_gauge_display: Label = $AuraGaugeDisplay 
 @onready var turn_queue = get_parent()
+
 var charge_countdown = 0
 var charged_action = null
 var charged_target = null
 
 var aura = "none"
-var aura_gauge := 0
+var aura_gauge = 0
 
 var buff_list = []
+
+# --- Custom Aura Offsets (Local to the Character) ---
+const AURA_X_OFFSET = -30 
+const AURA_Y_OFFSET = -40 
+
+
 func _ready() -> void:
-	if has_node("AnimatedSprite2D"):
-		sprite = $AnimatedSprite2D
-
-	if has_node("HP Bar"):
-		healthbar = $"HP Bar"
-		healthbar.rect_position = Vector2(0, -40)
-		healthbar.max_value = max_hp
-		healthbar.value = hp
-		
-	var aura_x_offset = -30 
-	var aura_y_offset = -40 
+	pass
 	
-	if aura_sprite:
-		aura_sprite.position = Vector2(aura_x_offset, aura_y_offset)
-		
-	if aura_gauge_display:
-		aura_gauge_display.rect_position = Vector2(aura_x_offset + 5, aura_y_offset + 15)
-	add_to_group("characters")
-
 # Turn execution
 func play_turn(target, action) -> void:
 	$AnimatedSprite2D.modulate = Color.WHITE
@@ -60,7 +51,7 @@ func play_turn(target, action) -> void:
 	emit_signal("text_emitted", char_name + " is taking a turn...")
 	await get_tree().create_timer(1).timeout
 	if sprite:
-		sprite.play(action.action_name)  
+		sprite.play(action.action_name)
 	
 	if action.is_charge:
 		if charge_countdown < action.charge_time:
@@ -77,6 +68,7 @@ func play_turn(target, action) -> void:
 			charge_countdown = 0
 			charged_target = null
 		await get_tree().create_timer(1.5).timeout
+		emit_signal("turn_finished") # Add turn_finished signal here
 		return
 	
 	if action.is_teamwide:
@@ -92,7 +84,7 @@ func play_turn(target, action) -> void:
 
 # Damage handling
 func take_damage(amount: int) -> void:
-	if is_defending: 
+	if is_defending:
 		amount = amount / 2
 		emit_signal("text_emitted", char_name + " is defending! Damage is halved.")
 		await get_tree().create_timer(1).timeout
@@ -132,6 +124,8 @@ func heal(heal_amount):
 	hp = new_hp
 	emit_signal("text_emitted", 'Healed for ' + str(diff))
 	await get_tree().create_timer(1.0).timeout
+	if healthbar:
+		healthbar.value = hp
 
 
 func buff(type,amount,duration):
@@ -143,13 +137,13 @@ func buff(type,amount,duration):
 func handle_damage_buffs():
 	strength_buffs = 0
 	magic_buffs = 0
-	var buffs_to_remove = [] 
+	var buffs_to_remove = []
 	
 	for buff in buff_list:
 		buff[2] -= 1
 		if buff[2] < 0:
 			buffs_to_remove.append(buff)
-			continue 
+			continue
 		if buff[0] == 'strength':
 			strength_buffs += buff[1]
 		elif buff[0] == 'magic':
@@ -191,7 +185,11 @@ func apply_element(element, gauge, damage, source_magic):
 			await get_tree().create_timer(1.0).timeout
 		'Pyro on Hydro':
 			reaction_damage *= 1.2
+			print(aura_gauge)
+			print(gauge)
 			aura_gauge -= 0.5*gauge
+			
+			print('Guage: ' + str(aura_gauge))
 			emit_signal("text_emitted", "Reverse Vaporize! Damage increased by 20%." )
 			await get_tree().create_timer(1.0).timeout
 		'Electro on Hydro', 'Hydro on Electro':
@@ -210,11 +208,13 @@ func apply_element(element, gauge, damage, source_magic):
 func update_aura_display(element,gauge):
 	
 	if aura == 'none':
-		aura_sprite.hide()
-		aura_gauge_display.hide()
+		if is_instance_valid(aura_sprite):
+			aura_sprite.hide()
+		if is_instance_valid(aura_gauge_display):
+			aura_gauge_display.hide()
 	else:
-		aura_sprite.show()
-		aura_gauge_display.show()
-		aura_sprite.play(element)
-		aura_gauge_display.text = str(aura_gauge)
-	
+		if is_instance_valid(aura_sprite) and is_instance_valid(aura_gauge_display):
+			aura_sprite.show()
+			aura_gauge_display.show()
+			aura_sprite.play(element)
+			aura_gauge_display.text = str(aura_gauge)

@@ -68,7 +68,7 @@ animations = [{
 "speed": 6.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ieudm"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_tj2sy"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -122,10 +122,14 @@ autoplay = "default"
 position = Vector2(0, -75)
 
 [node name="AuraSprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_ieudm")
+position = Vector2(-37, 88)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_tj2sy")
 animation = &"none"
 autoplay = "none"
 
 [node name="AuraGaugeDisplay" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = -36.0
+offset_top = 85.0
+offset_right = 4.0
+offset_bottom = 108.0

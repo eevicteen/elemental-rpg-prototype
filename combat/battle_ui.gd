@@ -180,7 +180,7 @@ func _add_target_button(char):
 
 	# Compute button position
 	var btn_length = btn.text.length() * 10
-	var char_pos = char.global_position
+	var char_pos = char.position
 	btn.position = char_pos - Vector2(btn_length / 2, sprite_height / 2 + 20)
 	
 	target_panel.add_child(btn)

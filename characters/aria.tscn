@@ -68,7 +68,7 @@ animations = [{
 "speed": 2.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_j2e8t"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_l57h7"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -114,20 +114,21 @@ step = 1.0
 script = ExtResource("2_lndsx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(6.00002, 11)
-scale = Vector2(1.03906, 1.15625)
 sprite_frames = SubResource("SpriteFrames_ur20g")
-animation = &"Roaring Melody"
 autoplay = "default"
 
 [node name="TargetMarker" type="Marker2D" parent="."]
 position = Vector2(0, -75)
 
 [node name="AuraSprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_j2e8t")
+position = Vector2(-42, 109)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_l57h7")
 animation = &"none"
 autoplay = "none"
 
 [node name="AuraGaugeDisplay" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = -41.0
+offset_top = 106.0
+offset_right = -1.0
+offset_bottom = 129.0

@@ -6,8 +6,8 @@ var hero_data = {
 		"max_hp": 120,
 		"hp": 120,
 		"strength": 500,
-		"magic": 50,
-		"speed": 12
+		"magic": 10,
+		"speed": 8
 	},
 	"Fortissimo": {
 		"scene": preload("res://characters/fortissimo.tscn"),
@@ -15,7 +15,7 @@ var hero_data = {
 		"hp": 80,
 		"strength": 500,
 		"magic": 10,
-		"speed": 8
+		"speed":12
 	}
 }
 

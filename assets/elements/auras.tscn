@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://dtfu7agllxoq8"]
+
+[ext_resource type="Texture2D" uid="uid://ccd00fwydhknv" path="res://assets/elements/electro.png" id="1_b3wur"]
+[ext_resource type="Texture2D" uid="uid://dtiyslf2060q3" path="res://assets/elements/hydro.png" id="2_kbeok"]
+[ext_resource type="Texture2D" uid="uid://bthvvrweqttpo" path="res://assets/elements/pyro.png" id="3_fnq0o"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b11fh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_b3wur")
+}],
+"loop": true,
+"name": &"Electro",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kbeok")
+}],
+"loop": true,
+"name": &"Hydro",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_fnq0o")
+}],
+"loop": true,
+"name": &"Pyro",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"none",
+"speed": 5.0
+}]
+
+[node name="Auras" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="AuraSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_b11fh")
+animation = &"none"
+autoplay = "none"
+
+[node name="AuraGaugeDisplay" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
