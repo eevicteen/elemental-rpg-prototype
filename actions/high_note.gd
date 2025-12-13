@@ -6,3 +6,5 @@ func _init():
 	description = "Attack the enemy with 8 base magic damage."
 	base_damage = 8
 	is_magic = true
+	element = 'Hydro'
+	element_gauge = 1

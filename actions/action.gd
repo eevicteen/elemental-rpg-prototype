@@ -19,8 +19,12 @@ var buff_duration: int
 var is_magic := false
 var base_damage
 
+var element := 'Physical'
+var element_gauge : int
+
 #Performs the action.
 func execute(source, target):
+	#Animation
 	if source.has_node("AnimatedSprite2D"):
 		var sprite = source.get_node("AnimatedSprite2D")
 		if sprite.sprite_frames.has_animation(action_name):
@@ -32,12 +36,24 @@ func execute(source, target):
 	else:
 		push_warning("No AnimatedSprite2D found on " + source.char_name)
 	
+	#Healing/Buffing action
 	if is_heal:
 		await target.heal(heal_amount)
 	elif buff_action != null:
 		await target.buff(buff_action,buff_amount,buff_duration)
+	
+	#Damage action
 	else:
+		var initial_damage: int
+		var final_damage: int #
 		if is_magic:
-			await target.take_damage(source.magic + base_damage + source.magic_buffs)
+			initial_damage = source.magic + base_damage + source.magic_buffs
 		else:
-			await target.take_damage(source.strength + base_damage + source.strength_buffs)
+			initial_damage = source.strength + base_damage + source.strength_buffs
+			
+		final_damage = initial_damage
+			
+		if element != 'Physical':
+			final_damage = await target.apply_element(element, element_gauge, initial_damage, source.magic)
+		await target.take_damage(final_damage)
+	

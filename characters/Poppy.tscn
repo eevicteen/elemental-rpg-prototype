@@ -1,9 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://djw12g2j6iwfa"]
+[gd_scene load_steps=16 format=3 uid="uid://djw12g2j6iwfa"]
 
 [ext_resource type="Script" uid="uid://cbql1jrieaoti" path="res://characters/poppy.gd" id="1_c0q6a"]
 [ext_resource type="Texture2D" uid="uid://c8dnamvug121p" path="res://assets/enemy/poppy_animation.png" id="2_xhipl"]
 [ext_resource type="Script" uid="uid://0lch38krxdpp" path="res://characters/hp_bar.gd" id="3_2ship"]
 [ext_resource type="FontFile" uid="uid://cwy0807mf3rd8" path="res://assets/font/pokemon_pixel_font.ttf" id="3_xhipl"]
+[ext_resource type="Texture2D" uid="uid://ccd00fwydhknv" path="res://assets/elements/electro.png" id="5_cs41o"]
+[ext_resource type="Texture2D" uid="uid://dtiyslf2060q3" path="res://assets/elements/hydro.png" id="6_klxpf"]
+[ext_resource type="Texture2D" uid="uid://bthvvrweqttpo" path="res://assets/elements/pyro.png" id="7_nq0uj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ship"]
 atlas = ExtResource("2_xhipl")
@@ -65,6 +68,38 @@ animations = [{
 "speed": 6.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_y06xw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_cs41o")
+}],
+"loop": true,
+"name": &"Electro",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_klxpf")
+}],
+"loop": true,
+"name": &"Hydro",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_nq0uj")
+}],
+"loop": true,
+"name": &"Pyro",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"none",
+"speed": 5.0
+}]
+
 [node name="Poppy" type="CharacterBody2D"]
 script = ExtResource("1_c0q6a")
 max_hp = 70
@@ -89,3 +124,12 @@ autoplay = "default"
 
 [node name="TargetMarker" type="Marker2D" parent="."]
 position = Vector2(0, -99)
+
+[node name="AuraSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_y06xw")
+animation = &"none"
+autoplay = "none"
+
+[node name="AuraGaugeDisplay" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

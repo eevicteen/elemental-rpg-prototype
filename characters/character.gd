@@ -21,10 +21,15 @@ var speed_buffs:= 0
 @onready var healthbar: ProgressBar = null
 @onready var skills
 @onready var sprite: AnimatedSprite2D = null
+@onready var aura_sprite = $AuraSprite
+@onready var aura_gauge_display = $AuraGaugeDisplay
 @onready var turn_queue = get_parent()
 var charge_countdown = 0
 var charged_action = null
 var charged_target = null
+
+var aura = "none"
+var aura_gauge := 0
 
 var buff_list = []
 func _ready() -> void:
@@ -36,6 +41,15 @@ func _ready() -> void:
 		healthbar.rect_position = Vector2(0, -40)
 		healthbar.max_value = max_hp
 		healthbar.value = hp
+		
+	var aura_x_offset = -30 
+	var aura_y_offset = -40 
+	
+	if aura_sprite:
+		aura_sprite.position = Vector2(aura_x_offset, aura_y_offset)
+		
+	if aura_gauge_display:
+		aura_gauge_display.rect_position = Vector2(aura_x_offset + 5, aura_y_offset + 15)
 	add_to_group("characters")
 
 # Turn execution
@@ -147,8 +161,7 @@ func handle_damage_buffs():
 	for expired_buff in buffs_to_remove:
 		buff_list.erase(expired_buff)
 	
-	
-	
+
 func handle_speed_buffs():
 	speed_buffs = 0
 	for buff in buff_list:
@@ -160,3 +173,48 @@ func handle_speed_buffs():
 			buff_list.erase(buff)
 			continue	
 		buff[2] -= 1
+
+
+func apply_element(element, gauge, damage, source_magic):
+	var reaction_damage = damage
+	if aura == "none":
+		aura = element
+		aura_gauge = gauge
+		update_aura_display(aura, aura_gauge)
+		return reaction_damage
+	var reaction_key = element + ' on ' + aura
+	match reaction_key:
+		'Hydro on Pyro':
+			reaction_damage *= 1.5
+			aura_gauge -= 2*gauge
+			emit_signal("text_emitted", "Strong Vaporize! Damage increased by 50%." )
+			await get_tree().create_timer(1.0).timeout
+		'Pyro on Hydro':
+			reaction_damage *= 1.2
+			aura_gauge -= 0.5*gauge
+			emit_signal("text_emitted", "Reverse Vaporize! Damage increased by 20%." )
+			await get_tree().create_timer(1.0).timeout
+		'Electro on Hydro', 'Hydro on Electro':
+			pass #addd damage over time effect
+		'Pyro on Electro', 'Electro on Pyro':
+			#await trigger_transformative_damage(source.magic)
+			aura_gauge -= gauge
+		_:
+			aura_gauge = clamp(aura_gauge+gauge,0,4)
+	if aura_gauge <= 0:
+		aura_gauge = 0
+		aura = 'none'
+	update_aura_display(aura,aura_gauge)	
+	return reaction_damage
+	
+func update_aura_display(element,gauge):
+	
+	if aura == 'none':
+		aura_sprite.hide()
+		aura_gauge_display.hide()
+	else:
+		aura_sprite.show()
+		aura_gauge_display.show()
+		aura_sprite.play(element)
+		aura_gauge_display.text = str(aura_gauge)
+	

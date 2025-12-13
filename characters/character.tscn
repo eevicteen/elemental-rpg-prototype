@@ -1,7 +1,42 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkcootcy24dop"]
+[gd_scene load_steps=7 format=3 uid="uid://bkcootcy24dop"]
 
 [ext_resource type="Script" uid="uid://bijubpyjf0y28" path="res://characters/character.gd" id="1_glpr6"]
 [ext_resource type="Script" uid="uid://0lch38krxdpp" path="res://characters/hp_bar.gd" id="2_qqr4u"]
+[ext_resource type="Texture2D" uid="uid://ccd00fwydhknv" path="res://assets/elements/electro.png" id="3_b1u1o"]
+[ext_resource type="Texture2D" uid="uid://dtiyslf2060q3" path="res://assets/elements/hydro.png" id="4_ke030"]
+[ext_resource type="Texture2D" uid="uid://bthvvrweqttpo" path="res://assets/elements/pyro.png" id="5_jfi6v"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f0775"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_b1u1o")
+}],
+"loop": true,
+"name": &"Electro",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ke030")
+}],
+"loop": true,
+"name": &"Hydro",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_jfi6v")
+}],
+"loop": true,
+"name": &"Pyro",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"none",
+"speed": 5.0
+}]
 
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_glpr6")
@@ -12,3 +47,12 @@ script = ExtResource("1_glpr6")
 offset_right = 4.0
 offset_bottom = 27.0
 script = ExtResource("2_qqr4u")
+
+[node name="AuraSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_f0775")
+animation = &"none"
+autoplay = "none"
+
+[node name="AuraGaugeDisplay" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

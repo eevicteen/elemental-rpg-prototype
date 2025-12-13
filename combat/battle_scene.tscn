@@ -860,10 +860,10 @@ anchor_left = 0.016
 anchor_top = 0.144
 anchor_right = 0.05
 anchor_bottom = 0.205
-offset_left = -0.432001
-offset_top = -0.312004
-offset_right = 0.399998
-offset_bottom = 0.159988
+offset_left = -18.432
+offset_top = -93.312
+offset_right = -17.6
+offset_bottom = -92.84
 theme = ExtResource("15_wy2mt")
 metadata/_edit_use_anchors_ = true
 

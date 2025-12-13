@@ -179,11 +179,10 @@ func _add_target_button(char):
 			push_warning("AnimatedSprite2D for %s has no valid animation!" % char.name)
 
 	# Compute button position
-	var target_marker = char.get_node_or_null("TargetMarker")
+	var btn_length = btn.text.length() * 10
+	var char_pos = char.global_position
+	btn.position = char_pos - Vector2(btn_length / 2, sprite_height / 2 + 20)
 	
-	btn.position = target_marker.global_position
-	print(target_marker.global_position)
-		
 	target_panel.add_child(btn)
 	
 
